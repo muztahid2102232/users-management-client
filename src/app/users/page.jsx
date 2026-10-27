@@ -10,7 +10,7 @@ const UserPage = async () => {
     <>
       <div className="grid grid-cols-3 gap-2.5 p-4">
         {users.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <UserCard key={user._id} user={user} />
         ))}
       </div>
     </>

@@ -2,10 +2,29 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { redirect } from "next/navigation";
 
-const handleOnSubmit = (e) => {};
+const handleOnSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const data = Object.fromEntries(formData.entries());
 
-export default function InputFieldgroup() {
+  const response = await fetch("http://localhost:5000/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  console.log(response.body);
+   const result=await response.json();
+   console.log(result);
+   if (result.insertedId) {
+    redirect("/users");
+   }
+};
+
+export default function AddUserPage() {
   return (
     <form action="" onSubmit={handleOnSubmit}>
       <p className="ml-36 text-3xl mb-3.5">User Information Submission Form</p>
@@ -38,7 +57,9 @@ export default function InputFieldgroup() {
           <Button type="reset" variant="outline">
             Reset
           </Button>
-          <Button type="submit" className="bg-black text-white">Add User</Button>
+          <Button type="submit" className="bg-black text-white">
+            Add User
+          </Button>
         </Field>
       </FieldGroup>
     </form>
