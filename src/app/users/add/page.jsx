@@ -16,9 +16,7 @@ const handleOnSubmit = async (e) => {
     },
     body: JSON.stringify(data),
   });
-  console.log(response.body);
    const result=await response.json();
-   console.log(result);
    if (result.insertedId) {
     redirect("/users");
    }
